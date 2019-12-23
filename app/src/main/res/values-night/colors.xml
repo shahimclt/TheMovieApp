@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorSurface">#101010</color>
+    <color name="colorOnSurface">#FEFEFE</color>
+
+    <color name="colorBackground">#202020</color>
+
+    <color name="textColorPrimary">#FEFEFE</color>
+    <color name="textColorSecondary">#707070</color>
+    <color name="textColorInverse">#101010</color>
+</resources>

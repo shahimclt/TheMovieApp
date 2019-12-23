@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,32 +10,69 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        app:liftOnScroll="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Widget.Tacho.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="?attr/actionBarSize" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.kennyc.view.MultiStateView
-        android:id="@+id/multiStateView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:msv_errorView="@layout/msv_layout_errorview"
-        app:msv_emptyView="@layout/msv_layout_emptyview"
-        app:msv_loadingView="@layout/msv_layout_loadingview"
+        android:background="@color/colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:msv_viewState="content">
+        android:fillViewport="true"
+        android:paddingBottom="60dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:context=".HomeActivity" />
 
-    </com.kennyc.view.MultiStateView>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.fxn.BubbleTabBar
+        android:id="@+id/bubbleTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorSurface"
+        android:layout_gravity="bottom"
+        android:elevation="8dp"
+        android:padding="7dp"
+        app:bubbletab_menuResource="@menu/bottom_nav"
+        app:bubbletab_disabled_icon_color="@color/textColorSecondary"
+        app:bubbletab_horizontal_padding="20dp"
+        app:bubbletab_icon_size="20dp"
+        app:bubbletab_title_size="16sp"
+        app:bubbletab_vertical_padding="10dp">
+    </com.fxn.BubbleTabBar>
+
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/colorBackground"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--        android:paddingBottom="70dp">-->
+
+<!--        <com.kennyc.view.MultiStateView-->
+<!--            android:id="@+id/multiStateView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:msv_errorView="@layout/msv_layout_errorview"-->
+<!--            app:msv_emptyView="@layout/msv_layout_emptyview"-->
+<!--            app:msv_loadingView="@layout/msv_layout_loadingview"-->
+<!--            app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+<!--            app:msv_viewState="content">-->
+
+
+
+<!--        </com.kennyc.view.MultiStateView>-->
+
+<!--    </androidx.core.widget.NestedScrollView>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

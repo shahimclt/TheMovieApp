@@ -1,14 +1,18 @@
 package com.shahim.themovieapp.api;
 
 
+import com.shahim.themovieapp.api.Pojo.SearchResult;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Query;
 
 public interface APIInterface {
-    @GET("islot/v14/allVideos")
+
+    @GET("/?apikey=16ec2533")
     @Headers({ "Accept: application/json" })
-    Call<ArrayList<VideoItem>>getVideoList();
+    Call<SearchResult>searchMovie(@Query("s") String keyword, @Query("page") Integer page);
 }
