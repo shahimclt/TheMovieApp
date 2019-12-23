@@ -1,9 +1,15 @@
 package com.shahim.themovieapp;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.shahim.themovieapp.api.APIClient;
 import com.shahim.themovieapp.api.APIInterface;
 import com.shahim.themovieapp.api.Pojo.Movie;
@@ -30,6 +37,9 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.search_input)
+    TextInputEditText searchInput;
 
     MovieListQuickAdapter mAdapter;
 
@@ -60,6 +70,20 @@ public class HomeFragment extends Fragment {
     void init() {
 //        mStateHelper = new MultiStateHelper(mStateView);
         initAdapter();
+        searchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_SEARCH) {
+                    Toast.makeText(getContext(),"Searched",Toast.LENGTH_SHORT).show();
+                    InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    quesry = textView.getText().toString();
+                    loadData(1);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     void initAdapter() {
