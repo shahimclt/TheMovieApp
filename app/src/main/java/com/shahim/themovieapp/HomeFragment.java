@@ -74,10 +74,11 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if(i== EditorInfo.IME_ACTION_SEARCH) {
-                    Toast.makeText(getContext(),"Searched",Toast.LENGTH_SHORT).show();
                     InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                     quesry = textView.getText().toString();
+                    mCurrentCounter = 0;
+                    mAdapter.setNewData(null);
                     loadData(1);
                     return true;
                 }
@@ -101,6 +102,7 @@ public class HomeFragment extends Fragment {
 
     void initLoadMore() {
         mAdapter.setEnableLoadMore(true);
+        mAdapter.setPreLoadNumber(2);
         mAdapter.setOnLoadMoreListener(() -> mRecyclerView.postDelayed(() -> {
             if (mCurrentCounter >= searchResult.getTotalResults()) {
                 //Data are all loaded.
@@ -112,8 +114,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadData(Integer page) {
-//        mStateHelper.showloading();
-
+        if (mCurrentCounter==0) {
+            mAdapter.setEmptyView(R.layout.msv_layout_loadingview,mRecyclerView);
+        }
         APIInterface mAPI = APIClient.getClient().create(APIInterface.class);
         Call<SearchResult> mCall = mAPI.searchMovie(quesry,page);
         mCall.enqueue(new Callback<SearchResult>() {
@@ -136,6 +139,11 @@ public class HomeFragment extends Fragment {
                     if (page>1) {
                         mAdapter.loadMoreFail();
                     }
+                    else {
+                        View errorView = getLayoutInflater().inflate(R.layout.msv_layout_errorview, mRecyclerView, false);
+                        errorView.findViewById(R.id.retry_btn).setOnClickListener(v -> loadData(page));
+                        mAdapter.setEmptyView(errorView);
+                    }
                 }
             }
 
@@ -143,6 +151,11 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<SearchResult> call, Throwable t) {
                 if (page>1) {
                     mAdapter.loadMoreFail();
+                }
+                else {
+                    View errorView = getLayoutInflater().inflate(R.layout.msv_layout_errorview, mRecyclerView, false);
+                    errorView.findViewById(R.id.retry_btn).setOnClickListener(v -> loadData(page));
+                    mAdapter.setEmptyView(errorView);
                 }
             }
         });
@@ -154,12 +167,16 @@ public class HomeFragment extends Fragment {
                 return;
             }
 //            mStateHelper.showContent();
-            mAdapter.updateItems(searchResult.getSearch());
+            mAdapter.setNewData(searchResult.getSearch());
             mCurrentCounter = mAdapter.getData().size();
 //            mStateHelper.showEmpty(R.string.list_empty_msg);
         }
         else {
-
+            View errorView = getLayoutInflater().inflate(R.layout.msv_layout_errorview, mRecyclerView, false);
+            ((TextView)errorView.findViewById(R.id.msv_error_desc)).setText(searchResult.getError());
+            ((TextView)errorView.findViewById(R.id.msv_error_desc)).setVisibility(View.VISIBLE);
+            errorView.findViewById(R.id.retry_btn).setOnClickListener(v -> loadData(1));
+            mAdapter.setEmptyView(errorView);
         }
     }
 
