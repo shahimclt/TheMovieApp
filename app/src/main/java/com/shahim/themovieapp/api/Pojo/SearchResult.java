@@ -9,7 +9,7 @@ public class SearchResult {
 
     @SerializedName("Search")
     @Expose
-    private List<Movie> search = null;
+    private List<OmdbShow> search = null;
 
     @SerializedName("totalResults")
     @Expose
@@ -23,7 +23,7 @@ public class SearchResult {
     @Expose
     private String error;
 
-    public List<Movie> getSearch() {
+    public List<OmdbShow> getSearch() {
         return search;
     }
 

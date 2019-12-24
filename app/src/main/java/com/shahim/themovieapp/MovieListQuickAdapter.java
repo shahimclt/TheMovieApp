@@ -3,24 +3,24 @@ package com.shahim.themovieapp;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.shahim.themovieapp.api.Pojo.Movie;
+import com.shahim.themovieapp.api.Pojo.OmdbShow;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MovieListQuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolder> {
+public class MovieListQuickAdapter extends BaseQuickAdapter<OmdbShow, BaseViewHolder> {
 
     public MovieListQuickAdapter() {
         super(R.layout.list_movie_item);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, Movie item) {
+    protected void convert(@NonNull BaseViewHolder helper, OmdbShow item) {
         Picasso.with(mContext)
                 .load(item.getPoster())
                 .placeholder(R.drawable.im_movie_poster)
@@ -29,11 +29,13 @@ public class MovieListQuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolde
 
         helper.setText(R.id.item_name,item.getTitle())
                 .setText(R.id.item_desc,item.getYear());
+
+        ((ImageView)helper.getView(R.id.show_type)).setImageDrawable(ContextCompat.getDrawable(mContext,item.getTypeIcon()));
 //        .addOnClickListener(R.id.downloadButton);
 
     }
 
-    public void updateItems(List<Movie> newItems) {
+    public void updateItems(List<OmdbShow> newItems) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override
             public int getOldListSize() {
@@ -52,8 +54,8 @@ public class MovieListQuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolde
 
             @Override
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                Movie oldData = mData.get(oldItemPosition);
-                Movie newData = newItems.get(newItemPosition);
+                OmdbShow oldData = mData.get(oldItemPosition);
+                OmdbShow newData = newItems.get(newItemPosition);
 
                 boolean result = true;
 

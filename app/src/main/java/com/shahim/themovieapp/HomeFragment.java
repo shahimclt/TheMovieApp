@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shahim.themovieapp.api.APIClient;
 import com.shahim.themovieapp.api.APIInterface;
-import com.shahim.themovieapp.api.Pojo.Movie;
 import com.shahim.themovieapp.api.Pojo.SearchResult;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
