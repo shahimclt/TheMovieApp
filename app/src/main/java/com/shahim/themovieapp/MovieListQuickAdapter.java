@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shahim.themovieapp.api.Pojo.Movie;
+import com.shahim.themovieapp.helper.BookmarksManagerSingleton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import xyz.hanks.library.bang.SmallBangView;
 
 public class MovieListQuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolder> {
 
@@ -31,7 +34,18 @@ public class MovieListQuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolde
                 .setText(R.id.item_desc,item.getYear());
 
         ((ImageView)helper.getView(R.id.show_type)).setImageDrawable(ContextCompat.getDrawable(mContext,item.getTypeIcon()));
-//        .addOnClickListener(R.id.downloadButton);
+
+        if(BookmarksManagerSingleton.sharedInstance(mContext).isBookmarked(mContext,item)) {
+            ((ImageView) helper.getView(R.id.bookmarker_image)).setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_bookmark_24dp));
+            ((SmallBangView) helper.getView(R.id.bookmarker)).setBackground(ContextCompat.getDrawable(mContext,R.drawable.bg_thumb_bookmark_active));
+            ((SmallBangView) helper.getView(R.id.bookmarker)).setSelected(true);
+        }
+        else {
+            ((ImageView) helper.getView(R.id.bookmarker_image)).setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_bookmark_border_white_24dp));
+            ((SmallBangView) helper.getView(R.id.bookmarker)).setBackground(ContextCompat.getDrawable(mContext,R.drawable.bg_thumb_bookmark));
+            ((SmallBangView) helper.getView(R.id.bookmarker)).setSelected(false);
+        }
+        helper.addOnClickListener(R.id.bookmarker);
 
     }
 
