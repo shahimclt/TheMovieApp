@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="tab_search">Search</string>
-    <string name="tab_home">Home</string>
+    <string name="tab_home">Discover</string>
     <string name="tab_bookmarks">Bookmarks</string>
 
     <string name="msv_empty_default_text">Nothing to show here</string>
@@ -21,4 +21,6 @@
 
     <string name="moviePosterTransitionName">mptransition</string>
     <string name="movie_detail_synopsis">Plot</string>
+    <string name="movie_bookmark_added">Added to bookmarks</string>
+    <string name="movie_bookmark_removed">Removed from bookmarks</string>
 </resources>

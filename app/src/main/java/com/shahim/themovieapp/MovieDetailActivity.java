@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.palette.graphics.Palette;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,21 +20,24 @@ import android.widget.TextView;
 
 import com.github.florent37.fiftyshadesof.FiftyShadesOf;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.snackbar.Snackbar;
 import com.shahim.themovieapp.api.APIClient;
 import com.shahim.themovieapp.api.APIInterface;
 import com.shahim.themovieapp.api.Pojo.Movie;
 import com.shahim.themovieapp.api.Pojo.MovieDetail;
 import com.shahim.themovieapp.api.Pojo.Rating;
-import com.shahim.themovieapp.api.Pojo.SearchResult;
+import com.shahim.themovieapp.helper.BookmarksManagerSingleton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import xyz.hanks.library.bang.SmallBangView;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -70,7 +75,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         init();
-        displayDetail();
+        displayInitial();
         extractColors();
         loadData();
     }
@@ -116,7 +121,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             });
     }
 
-    void displayDetail() {
+    void displayInitial() {
         mCollapsingToolbar.setTitle(mMovie.getTitle());
 
         showTypeIcon.setImageDrawable(ContextCompat.getDrawable(this,mMovie.getTypeIcon()));
@@ -132,6 +137,16 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .load(mMovie.getPoster())
                 .error(R.drawable.im_movie_poster)
                 .into(mainPoster);
+
+        BookmarksManagerSingleton bms = BookmarksManagerSingleton.sharedInstance(this);
+        if(bms.isBookmarked(this,mMovie)) {
+            mBookmarkToggle.setSelected(true);
+            mBookmarkImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_bookmark_24dp));
+        }
+        else {
+            mBookmarkToggle.setSelected(false);
+            mBookmarkImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_bookmark_border_24dp));
+        }
     }
 
     void loadData() {
@@ -194,5 +209,31 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
 
         mPlot.setText(mMovieDetail.getPlot());
+    }
+
+    @BindView(R.id.movie_bookmark)
+    SmallBangView mBookmarkToggle;
+    @BindView(R.id.movie_bookmark_image)
+    ImageView mBookmarkImage;
+
+    @OnClick(R.id.movie_bookmark)
+    void bookmarkClicked() {
+        if (mBookmarkToggle.isSelected()) {
+            mBookmarkToggle.setSelected(false);
+            mBookmarkImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_bookmark_border_24dp));
+            Snackbar.make(mBookmarkToggle, R.string.movie_bookmark_removed, Snackbar.LENGTH_SHORT).show();
+            BookmarksManagerSingleton.sharedInstance(this).removeBookmark(this,mMovie);
+        } else {
+            mBookmarkToggle.setSelected(true);
+            mBookmarkImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_bookmark_24dp));
+            mBookmarkToggle.likeAnimation(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                }
+            });
+            Snackbar.make(mBookmarkToggle, R.string.movie_bookmark_added, Snackbar.LENGTH_SHORT).show();
+            BookmarksManagerSingleton.sharedInstance(this).addBookmark(this,mMovie);
+        }
     }
 }
