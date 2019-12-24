@@ -2,7 +2,6 @@ package com.shahim.themovieapp;
 
 import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,7 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shahim.themovieapp.api.APIClient;
 import com.shahim.themovieapp.api.APIInterface;
-import com.shahim.themovieapp.api.Pojo.OmdbShow;
+import com.shahim.themovieapp.api.Pojo.Movie;
 import com.shahim.themovieapp.api.Pojo.SearchResult;
 
 import butterknife.BindView;
@@ -97,15 +96,15 @@ public class HomeFragment extends Fragment {
 //            }
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            OmdbShow movie = mAdapter.getData().get(position);
+            Movie movie = mAdapter.getData().get(position);
             showMovieDetail(movie,view);
         });
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    void showMovieDetail(OmdbShow movie,View view) {
+    void showMovieDetail(Movie movie, View view) {
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(),view.findViewById(R.id.item_image),getResources().getString(R.string.moviePosterTransitionName));
-        startActivity(ShowDetailActivity.craftIntent(getActivity(),movie),options.toBundle());
+        startActivity(MovieDetailActivity.craftIntent(getActivity(),movie),options.toBundle());
     }
 
     void initLoadMore() {

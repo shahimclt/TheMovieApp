@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheMovieApp">
-        <activity android:name=".ShowDetailActivity"
+        <activity android:name=".MovieDetailActivity"
             android:theme="@style/Theme.TheMovieApp.Collapsing"
             android:screenOrientation="portrait">
 

@@ -27,6 +27,9 @@
     <color name="colorSurface">#FEFEFE</color>
     <color name="colorOnSurface">#303030</color>
 
+    <color name="colorOnDark">#FEFEFE</color>
+    <color name="colorOnDarkLight">#707070</color>
+
     <color name="colorBackground">#EEEEEE</color>
 
     <color name="textColorPrimary">#101010</color>

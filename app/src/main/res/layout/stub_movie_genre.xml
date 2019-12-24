@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:text="Action"
+    android:textSize="12sp"
+    android:padding="1dp"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp"
+    android:background="@drawable/bg_movie_genre"
+    android:textColor="@color/colorOnDark"
+    android:layout_marginStart="@dimen/element_spacing"
+    tools:showIn="@layout/activity_movie_detail" />
