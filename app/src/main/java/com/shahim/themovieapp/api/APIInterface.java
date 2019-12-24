@@ -17,7 +17,7 @@ public interface APIInterface {
     @Headers({ "Accept: application/json" })
     Call<SearchResult>searchMovie(@Query("s") String keyword, @Query("page") Integer page);
 
-    @GET("/?apikey=16ec2533")
+    @GET("/?apikey=16ec2533&plot=full")
     @Headers({ "Accept: application/json" })
     Call<MovieDetail>getMovieDetails(@Query("i") String imdbId);
 }

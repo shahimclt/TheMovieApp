@@ -20,4 +20,5 @@
     <string name="search_hint">Search Movies</string>
 
     <string name="moviePosterTransitionName">mptransition</string>
+    <string name="movie_detail_synopsis">Plot</string>
 </resources>

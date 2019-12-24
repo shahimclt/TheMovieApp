@@ -16,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.florent37.fiftyshadesof.FiftyShadesOf;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.shahim.themovieapp.api.APIClient;
 import com.shahim.themovieapp.api.APIInterface;
 import com.shahim.themovieapp.api.Pojo.Movie;
 import com.shahim.themovieapp.api.Pojo.MovieDetail;
+import com.shahim.themovieapp.api.Pojo.Rating;
 import com.shahim.themovieapp.api.Pojo.SearchResult;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -133,6 +135,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     void loadData() {
+        final FiftyShadesOf fiftyShadesOf = FiftyShadesOf.with(this)
+                .on(mDetailHolder)
+                .start();
         APIInterface mAPI = APIClient.getClient().create(APIInterface.class);
         Call<MovieDetail> mCall = mAPI.getMovieDetails(mMovie.getImdbID());
         mCall.enqueue(new Callback<MovieDetail>() {
@@ -141,20 +146,33 @@ public class MovieDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     MovieDetail res = response.body();
                     mMovieDetail = res;
-
                     refreshView();
                 }
                 else {
                     //TODO show something
                 }
+                fiftyShadesOf.stop();
             }
 
             @Override
             public void onFailure(Call<MovieDetail> call, Throwable t) {
                 //TODO do something
+                fiftyShadesOf.stop();
             }
         });
     }
+
+    @BindView(R.id.movie_detail_holder)
+    View mDetailHolder;
+    @BindView(R.id.movie_rating)
+    TextView mRating;
+    @BindView(R.id.movie_runtime)
+    TextView mRuntime;
+    @BindView(R.id.movie_synopsis)
+    TextView mPlot;
+
+    @BindView(R.id.external_ratings_holder)
+    ViewGroup mRatingsHolder;
 
     void refreshView() {
         LayoutInflater inflater = getLayoutInflater();
@@ -163,5 +181,18 @@ public class MovieDetailActivity extends AppCompatActivity {
             gText.setText(g.trim());
             genreHolder.addView(gText);
         }
+
+        mRating.setText(mMovieDetail.getRated());
+        mRuntime.setText(mMovieDetail.getRuntime());
+
+        for (Rating rating : mMovieDetail.getRatings()) {
+            View ratingView = inflater.inflate(R.layout.stub_movie_rating_ext,mRatingsHolder,false);
+            ((ImageView)ratingView.findViewById(R.id.rater_image)).setImageDrawable(ContextCompat.getDrawable(this,rating.getSourceIcon()));
+            ((TextView)ratingView.findViewById(R.id.rater_name)).setText(rating.getSource());
+            ((TextView)ratingView.findViewById(R.id.rater_val)).setText(rating.getValue());
+            mRatingsHolder.addView(ratingView);
+        }
+
+        mPlot.setText(mMovieDetail.getPlot());
     }
 }
