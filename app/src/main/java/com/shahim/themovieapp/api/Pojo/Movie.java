@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IntDef;
 import androidx.annotation.StringDef;
 
 import com.google.gson.annotations.Expose;
@@ -14,9 +13,9 @@ import com.shahim.themovieapp.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class OmdbShow implements Parcelable {
+public class Movie implements Parcelable {
 
-    protected OmdbShow(Parcel in) {
+    protected Movie(Parcel in) {
         title = in.readString();
         year = in.readString();
         imdbID = in.readString();
@@ -24,15 +23,15 @@ public class OmdbShow implements Parcelable {
         poster = in.readString();
     }
 
-    public static final Creator<OmdbShow> CREATOR = new Creator<OmdbShow>() {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
-        public OmdbShow createFromParcel(Parcel in) {
-            return new OmdbShow(in);
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
         }
 
         @Override
-        public OmdbShow[] newArray(int size) {
-            return new OmdbShow[size];
+        public Movie[] newArray(int size) {
+            return new Movie[size];
         }
     };
 
