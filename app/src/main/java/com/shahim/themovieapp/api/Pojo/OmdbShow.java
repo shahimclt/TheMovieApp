@@ -1,5 +1,8 @@
 package com.shahim.themovieapp.api.Pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.StringDef;
@@ -11,7 +14,41 @@ import com.shahim.themovieapp.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class OmdbShow {
+public class OmdbShow implements Parcelable {
+
+    protected OmdbShow(Parcel in) {
+        title = in.readString();
+        year = in.readString();
+        imdbID = in.readString();
+        type = in.readString();
+        poster = in.readString();
+    }
+
+    public static final Creator<OmdbShow> CREATOR = new Creator<OmdbShow>() {
+        @Override
+        public OmdbShow createFromParcel(Parcel in) {
+            return new OmdbShow(in);
+        }
+
+        @Override
+        public OmdbShow[] newArray(int size) {
+            return new OmdbShow[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(year);
+        parcel.writeString(imdbID);
+        parcel.writeString(type);
+        parcel.writeString(poster);
+    }
 
     @StringDef(value={MOVIE, SERIES, EPISODE})
     @Retention(RetentionPolicy.SOURCE)

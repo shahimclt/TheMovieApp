@@ -17,7 +17,7 @@
     <string name="error_generic_network">We are having trouble talking to our servers. Please check your connection and try again.</string>
     <string name="list_empty_msg">Nothing to show here.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">Search Movies</string>
+
+    <string name="moviePosterTransitionName">mptransition</string>
 </resources>
