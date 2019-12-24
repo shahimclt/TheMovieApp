@@ -80,7 +80,9 @@ public class BookmarksManagerSingleton {
     }
 
     public ArrayList<Movie> getBookmarks() {
-        return mBookmarks;
+        ArrayList<Movie> arr = new ArrayList<>();
+        arr.addAll(mBookmarks);
+        return arr;
     }
 
     public boolean isBookmarked(Context c, Movie m) {

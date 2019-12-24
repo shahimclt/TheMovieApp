@@ -4,17 +4,21 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.fxn.BubbleTabBar;
+import com.fxn.OnBubbleClickListener;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-//    @BindView(R.id.multiStateView)
-//    MultiStateView mStateView;
-//    MultiStateHelper mStateHelper;
+    @BindView(R.id.bubbleTabBar)
+    BubbleTabBar mTabBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,30 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container, new HomeFragment())
                     .commit();
         }
+
+        init();
+    }
+
+    void init() {
+        mTabBar.addBubbleListener(id -> {
+            Fragment fragment = null;
+            switch (id) {
+                case R.id.tab_home:
+                    fragment = new HomeFragment();
+                    break;
+
+                case R.id.tab_bookmarks:
+                    fragment = new BookmarksFragment();
+                    break;
+            }
+
+            if (fragment != null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
     }
 
     @Override

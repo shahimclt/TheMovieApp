@@ -8,14 +8,14 @@
 <!--        android:iconTint="@color/colorSecondaryDark"/>-->
 
     <item
-        android:id="@+id/item1"
+        android:id="@+id/tab_home"
         android:title="@string/tab_home"
         android:checked="true"
         android:icon="@drawable/ic_local_movies_24dp"
         android:iconTint="@color/colorSecondaryDark"/>
 
     <item
-        android:id="@+id/item2"
+        android:id="@+id/tab_bookmarks"
         android:title="@string/tab_bookmarks"
         android:icon="@drawable/ic_bookmark_24dp"
         android:iconTint="@color/colorSecondaryDark"/>
