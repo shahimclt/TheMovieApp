@@ -21,6 +21,11 @@
 
     <string name="moviePosterTransitionName">mptransition</string>
     <string name="movie_detail_synopsis">Plot</string>
+    <string name="movie_detail_director">Director: </string>
+    <string name="movie_detail_writer">Writer: </string>
+    <string name="movie_detail_cast">Cast: </string>
+
+
     <string name="movie_bookmark_added">Added to bookmarks</string>
     <string name="movie_bookmark_removed">Removed from bookmarks</string>
 </resources>

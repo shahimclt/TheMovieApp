@@ -58,7 +58,7 @@ public class BookmarksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_bookmarks, container, false);
         unbinder = ButterKnife.bind(this, v);
         if (savedInstanceState==null) {
             init();

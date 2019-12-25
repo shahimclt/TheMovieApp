@@ -1,5 +1,7 @@
 package com.shahim.themovieapp;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -10,8 +12,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -189,6 +196,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.external_ratings_holder)
     ViewGroup mRatingsHolder;
 
+    @BindView(R.id.movie_director)
+    TextView mDirector;
+    @BindView(R.id.movie_writer)
+    TextView mWriter;
+    @BindView(R.id.movie_cast)
+    TextView mCast;
+
     void refreshView() {
         LayoutInflater inflater = getLayoutInflater();
         for (String g : mMovieDetail.getGenre().split(",")) {
@@ -209,6 +223,44 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
 
         mPlot.setText(mMovieDetail.getPlot());
+
+        //Cast n Crew
+
+        SpannableStringBuilder ssb;
+
+        ssb = new SpannableStringBuilder("");
+        ssb.append(getSpannable(R.string.movie_detail_director,R.color.textColorSecondary));
+        ssb.append(getSpannable(mMovieDetail.getDirector(),R.color.textColorPrimary));
+        mDirector.setText(ssb);
+
+        mWriter.setText(getCommaFormattedSpannable(R.string.movie_detail_writer,mMovieDetail.getWriter()));
+        mCast.setText(getCommaFormattedSpannable(R.string.movie_detail_cast,mMovieDetail.getActors()));
+
+    }
+
+    CharSequence getCommaFormattedSpannable(@StringRes int label, String value) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder("");
+        ssb.append(getSpannable(label,R.color.textColorSecondary));
+        ssb.append(" ");
+        for (String section : value.split(",")) {
+            String[] parts = section.split("\\(");
+            ssb.append(getSpannable(parts[0],R.color.textColorPrimary));
+            if (parts.length>1) {
+                ssb.append(getSpannable("(" + parts[1], R.color.textColorSecondary));
+            }
+            ssb.append(getSpannable(",", R.color.textColorSecondary));
+        }
+
+        return ssb.subSequence(0,ssb.length()-1);
+    }
+
+    SpannableString getSpannable(@StringRes int value, @ColorRes int color) {
+        return getSpannable(getString(value),color);
+    }
+    SpannableString getSpannable(String value, @ColorRes int color) {
+        SpannableString sp = new SpannableString(value);
+        sp.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this,color)),0,sp.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return sp;
     }
 
     @BindView(R.id.movie_bookmark)
