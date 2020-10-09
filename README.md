@@ -3,7 +3,9 @@
 The Movie App is simple: It lets you lookup movie info and bookmark them.
 Why the bookmarking you ask? Well, I dont know, use it as a to-watch list or something, you figure it out.
 
-<img src="https://user-images.githubusercontent.com/8318002/95570665-dc98fe00-0a44-11eb-8889-ec26c356a7f0.png" alt="Home Page" width="400"> <img src="(https://user-images.githubusercontent.com/8318002/95570685-e1f64880-0a44-11eb-912a-e64a0d9864b7.png" alt="Bookmarks Page" width="400"> <img src="((https://user-images.githubusercontent.com/8318002/95570689-e6226600-0a44-11eb-8acb-bbc5c66a31f8.png" alt="Movie Detail Page" width="400">
+<img src="https://user-images.githubusercontent.com/8318002/95570665-dc98fe00-0a44-11eb-8889-ec26c356a7f0.png" alt="Home Page" width="400">
+<img src="https://user-images.githubusercontent.com/8318002/95570685-e1f64880-0a44-11eb-912a-e64a0d9864b7.png" alt="Bookmarks Page" width="400">
+<img src="https://user-images.githubusercontent.com/8318002/95570689-e6226600-0a44-11eb-8acb-bbc5c66a31f8.png" alt="Movie Detail Page" width="400">
 
 
 ## Features
